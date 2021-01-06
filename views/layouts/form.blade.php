@@ -220,6 +220,61 @@
     }
 @stop
 
+@push('vuexStore')
+    window['{{ config('twill.js_namespace') }}'].STORE.publication.submitOptions = {
+        draft: [
+          {
+            name: 'save-close',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.save-close')) !!}
+          },
+          {
+            name: 'save-new',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.save-new')) !!}
+          },
+          {
+            name: 'cancel',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.cancel')) !!}
+          }
+        ],
+        live: [
+          {
+            name: 'publish',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.enable-user')) !!}
+          },
+          {
+            name: 'publish-close',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.enable-user-and-close')) !!}
+          },
+          {
+            name: 'publish-new',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.enable-user-and-create-new')) !!}
+          },
+          {
+            name: 'cancel',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.cancel')) !!}
+          }
+        ],
+        update: [
+          {
+            name: 'update',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.update')) !!}
+          },
+          {
+            name: 'update-close',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.update-and-close')) !!}
+          },
+          {
+            name: 'update-new',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.update-and-create-new')) !!}
+          },
+          {
+            name: 'cancel',
+            text: {!! json_encode(twillTrans('twill::lang.publisher.cancel')) !!}
+          }
+        ]
+      }
+@endpush
+
 @prepend('extra_js')
     @includeWhen(config('twill.block_editor.inline_blocks_templates', true), 'twill::partials.form.utils._blocks_templates')
     <script src="{{ twillAsset('main-form.js') }}" crossorigin></script>
