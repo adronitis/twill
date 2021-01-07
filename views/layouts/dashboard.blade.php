@@ -33,7 +33,7 @@
 
 @section('content')
     <div class="dashboard">
-        <a17-shortcut-creator :entities="{{ json_encode($shortcuts ?? []) }}"></a17-shortcut-creator>
+        <a17-shortcut-creator :entities="{{ json_encode($shortcuts ?? []) }}" translation-sheet-id="{{ env('TS_SPREADSHEET_ID') }}"></a17-shortcut-creator>
 
         <div class="container">
             @if(($facts ?? false) || (!$drafts->isEmpty()))

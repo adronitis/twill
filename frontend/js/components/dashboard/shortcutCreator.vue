@@ -2,7 +2,13 @@
   <div class="shortcutCreator">
     <div class="container" v-if="entities.length">
       <div class="wrapper wrapper--reverse">
-        <div class="shortcutCreator__create">
+        <div class="dashboard__button">
+          <a17-button type="button" variant="action"
+                      @click="refreshTranslations">
+              Refresh translations
+          </a17-button>
+        </div>
+        <!-- <div class="shortcutCreator__create">
           <a17-dropdown class="shortcutCreator__dropdown" ref="createNewDropdown" position="bottom-right" width="full"
                         :offset="0">
             <a17-button type="button" class="shortcutCreator__btn" variant="action"
@@ -18,7 +24,7 @@
               </ul>
             </div>
           </a17-dropdown>
-        </div>
+        </div>-->
         <div class="shortcutCreator__listing">
           <template v-for="(entity, index) in entities">
             <a class="shortcutCreator__listingItem" :href="entity.url" v-if="entity.number" :key="index">
@@ -33,6 +39,8 @@
 </template>
 
 <script>
+  import { NOTIFICATION } from '@/store/mutations'
+
   export default {
     name: 'A17ShortcutCreator',
     props: {
@@ -41,10 +49,29 @@
         default: function () {
           return []
         }
+      },
+      translationSheetId: {
+        type: String,
+        default: ''
       }
     },
     computed: {},
-    methods: {}
+    methods: {
+      refreshTranslations () {
+        const that = this
+        this.$http.get(`manage/refresh-translations?id=${that.translationSheetId}`).then((resp) => {
+          this.$store.commit(NOTIFICATION.SET_NOTIF, {
+            message: 'Translation has been imported from Google sheets',
+            variant: 'success'
+          })
+        }, function (resp) {
+          that.$store.commit(NOTIFICATION.SET_NOTIF, {
+            message: 'Oops, something went wrong with the import',
+            variant: 'error'
+          })
+        })
+      }
+    }
   }
 </script>
 
@@ -75,6 +102,15 @@
     large: 1,
     xlarge: 1
   );
+
+  .dashboard__button {
+    margin:0px 0 20px 20px;
+
+    @include breakpoint('medium+') {
+      margin:20px 0 0 0;
+    }
+
+  }
 
   .shortcutCreator {
     padding: 20px 0;
