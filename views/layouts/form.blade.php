@@ -252,10 +252,6 @@
         ],
         update: [
           {
-            name: 'update',
-            text: {!! json_encode(twillTrans('twill::lang.publisher.update')) !!}
-          },
-          {
             name: 'update-close',
             text: {!! json_encode(twillTrans('twill::lang.publisher.update-close')) !!}
           },
