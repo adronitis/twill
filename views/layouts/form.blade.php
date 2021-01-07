@@ -238,16 +238,12 @@
         ],
         live: [
           {
-            name: 'publish',
-            text: {!! json_encode(twillTrans('twill::lang.publisher.enable-user')) !!}
-          },
-          {
             name: 'publish-close',
-            text: {!! json_encode(twillTrans('twill::lang.publisher.enable-user-and-close')) !!}
+            text: {!! json_encode(twillTrans('twill::lang.publisher.publish-close')) !!}
           },
           {
             name: 'publish-new',
-            text: {!! json_encode(twillTrans('twill::lang.publisher.enable-user-and-create-new')) !!}
+            text: {!! json_encode(twillTrans('twill::lang.publisher.publish-new')) !!}
           },
           {
             name: 'cancel',
@@ -261,11 +257,11 @@
           },
           {
             name: 'update-close',
-            text: {!! json_encode(twillTrans('twill::lang.publisher.update-and-close')) !!}
+            text: {!! json_encode(twillTrans('twill::lang.publisher.update-close')) !!}
           },
           {
             name: 'update-new',
-            text: {!! json_encode(twillTrans('twill::lang.publisher.update-and-create-new')) !!}
+            text: {!! json_encode(twillTrans('twill::lang.publisher.update-new')) !!}
           },
           {
             name: 'cancel',
