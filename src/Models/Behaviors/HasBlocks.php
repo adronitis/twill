@@ -11,6 +11,28 @@ trait HasBlocks
         return $this->morphMany(Block::class, 'blockable')->orderBy(config('twill.blocks_table', 'twill_blocks') . '.position', 'asc');
     }
 
+    public function renderDefaultTemplateBlocks($template, $blockViewMappings = [], $data = [])
+    {
+        $companyBlocks = $this->blocks;
+        return $template->blocks->where('parent_id', null)->map(function ($block) use ($blockViewMappings, $companyBlocks, $data) {
+            if($companyBlock = $companyBlocks->where('type', $block->type)){
+                $getFirstBlock = current($companyBlock);
+
+                if(count($getFirstBlock) > 0){
+                    $firstBlock = current($getFirstBlock);
+                    $block = $firstBlock;
+                    $block->childs = $companyBlocks->where('parent_id', $block->id);
+                }
+            } else {
+                $block->childs = $this->blocks->where('parent_id', $block->id);
+            }
+
+            $view = $this->getBlockView($block->type, $blockViewMappings);
+
+            return view($view, $data)->with('block', $block)->render() . ($renderedChildViews ?? '');
+        })->implode('');
+    }
+
     public function renderBlocks($renderChilds = true, $blockViewMappings = [], $data = [])
     {
         return $this->blocks->where('parent_id', null)->map(function ($block) use ($blockViewMappings, $renderChilds, $data) {
