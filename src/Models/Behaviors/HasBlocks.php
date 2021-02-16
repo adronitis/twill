@@ -15,16 +15,19 @@ trait HasBlocks
     {
         $companyBlocks = $this->blocks;
         return $template->blocks->where('parent_id', null)->map(function ($block) use ($blockViewMappings, $companyBlocks, $data) {
-            if($companyBlock = $companyBlocks->where('type', $block->type)){
-                $getFirstBlock = current($companyBlock);
 
-                if(count($getFirstBlock) > 0){
-                    $firstBlock = current($getFirstBlock);
-                    $block = $firstBlock;
+            foreach ($companyBlocks as $key => $companyBlock) {
+                if ($companyBlock->type == $block->type) {
+                    $block = $companyBlock;
                     $block->childs = $companyBlocks->where('parent_id', $block->id);
+                    $companyBlocks->forget($key);
+
+                    $view = $this->getBlockView($block->type, $blockViewMappings);
+                    return view($view, $data)->with('block', $block)->render() . ($renderedChildViews ?? '');
+
+                } else {
+                    $block->childs = $this->blocks->where('parent_id', $block->id);
                 }
-            } else {
-                $block->childs = $this->blocks->where('parent_id', $block->id);
             }
 
             $view = $this->getBlockView($block->type, $blockViewMappings);
