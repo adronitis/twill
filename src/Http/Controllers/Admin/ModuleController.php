@@ -2,6 +2,7 @@
 
 namespace A17\Twill\Http\Controllers\Admin;
 
+use App\Models\Company;
 use A17\Twill\Helpers\FlashLevel;
 use A17\Twill\Services\Blocks\BlockCollection;
 use Illuminate\Contracts\Foundation\Application;
@@ -566,6 +567,13 @@ abstract class ModuleController extends Controller
         }
 
         $previewView = $this->previewView ?? (Config::get('twill.frontend.views_path', 'site') . '.' . Str::singular($this->moduleName));
+
+        //Allow preview based on template
+        $company = Company::find($item->id);
+        if($company->use_default_template){
+            $defaultTemplate = Company::with('translations')->with('medias')->with('files')->with('blocks')->find($company->company_id);
+            $item->default = $defaultTemplate;
+        }
 
         return View::exists($previewView) ? View::make($previewView, array_replace([
             'item' => $item,
