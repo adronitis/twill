@@ -575,6 +575,8 @@ abstract class ModuleController extends Controller
             $item->default = $defaultTemplate;
         }
 
+        $item->isPreview = true;
+
         return View::exists($previewView) ? View::make($previewView, array_replace([
             'item' => $item,
         ], $this->previewData($item))) : View::make('twill::errors.preview', [
