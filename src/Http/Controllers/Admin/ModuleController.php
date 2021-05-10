@@ -569,10 +569,11 @@ abstract class ModuleController extends Controller
         $previewView = $this->previewView ?? (Config::get('twill.frontend.views_path', 'site') . '.' . Str::singular($this->moduleName));
 
         //Allow preview based on template
-        $company = Company::find($item->id);
-        if($company->use_default_template){
-            $defaultTemplate = Company::with('translations')->with('medias')->with('files')->with('blocks')->find($company->company_id);
-            $item->default = $defaultTemplate;
+        if($company = Company::find($item->id)){
+            if($company->use_default_template){
+                $defaultTemplate = Company::with('translations')->with('medias')->with('files')->with('blocks')->find($company->company_id);
+                $item->default = $defaultTemplate;
+            }
         }
 
         $item->isPreview = true;
