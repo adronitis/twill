@@ -40,6 +40,7 @@ class File extends Model
             'original' => FileService::getUrl($this->uuid),
             'size' => $this->size,
             'filesizeInMb' => number_format($this->attributes['size'] / 1048576, 2),
+            'created_at' => $this->created_at->format('d-m-Y H:i:s'),
         ];
     }
 
