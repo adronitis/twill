@@ -16,6 +16,8 @@
             <li class="f--small" v-if="isImage && (firstMedia.width + firstMedia.height)">
               {{ $trans('media-library.sidebar.dimensions', 'Dimensions') }}: {{ firstMedia.width }} &times; {{ firstMedia.height }}
             </li>
+            <li class="f--small" v-if="firstMedia.original" >Link: {{ firstMedia.original }}</li>
+            <li class="f--small" v-if="firstMedia.original" >Date: {{ firstMedia.created_at  }}</li>
           </ul>
         </template>
 
