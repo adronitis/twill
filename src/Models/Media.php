@@ -76,6 +76,7 @@ class Media extends Model
             'updateUrl' => route('admin.media-library.medias.single-update'),
             'updateBulkUrl' => route('admin.media-library.medias.bulk-update'),
             'deleteBulkUrl' => route('admin.media-library.medias.bulk-delete'),
+            'created_at' => $this->created_at->format('d-m-Y H:i:s'),
             'metadatas' => [
                 'default' => [
                     'caption' => $this->caption,
